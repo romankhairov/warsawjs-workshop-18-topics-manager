@@ -1,0 +1,17 @@
+{
+  "name": "warsawjs-workshop-18-topics-manager",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "parcel index.html"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "parcel-bundler": "^1.6.2"
+  },
+  "devDependencies": {},
+  "description": ""
+}
