@@ -1,6 +1,18 @@
 require ('bulma');
 const hello = require('hellojs');
 
+var userCheck = hello('github').getAuthResponse();
+
+if (userCheck) {
+  
+    hello('github').api('/me')
+        .then(function (userProfile) {
+        console.log(userProfile);
+        renderUserDetails(userProfile)
+    });
+    
+};
+
 hello.init({
     github: 'c8917518020c7fc8f6a8'
 });
@@ -16,20 +28,22 @@ hello.init({
 //    };
 
 const $login = document.querySelector(".js-login-via-github");
-const $user = document.querySelector(".js-user");
+const $logout = document.querySelector(".js-logout-via-github");
+const $user = document.querySelector(".user");
+
+
 
 $login.addEventListener('click', (e) => {
 
     e.preventDefault();
     hello('github').login()
-        .then(function () {
+        .then(function () { 
             return hello('github').api('/me');
         })
-        .then(function (userProfile) {
-            console.log(userProfile.login);
-            console.log(userProfile.avatar_url);
-            renderUserDetails(userProfile)
-        })
+            .then(function (userProfile) {
+                console.log(userProfile);
+                renderUserDetails(userProfile)
+            })
 
 });
 
@@ -37,32 +51,22 @@ function renderUserDetails(userProfile) {
     const template = `
         <div class="navbar-item">
             ${userProfile.login}
+            ${userProfile.location}
     
             <img src="${userProfile.avatar_url}" alt=""/>
         </div>  
 `
     $user.innerHTML += template;
-    $user.innerHTML += template;
     
 }
 
-
-
-
-//const $logout = document.querySelector(".js-logout-via-github");
-
-//$logout.addEventListener('click', (e) => {
-//    
-//        e.preventDefault();
-//        hello('github').login()
-//        .then(function () {
-//            return hello('github').api('/me');
-//        })
-//        .then(function (userProfile) {
-//            console.log(userProfile);
-//        })
-//                
-//    });
+$logout.addEventListener('click', () => {
+        console.log("logout");
+        hello.logout('github')
+            .then(function () {
+                location.reload(true);
+            })
+    });
 
 
 
