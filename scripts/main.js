@@ -1,5 +1,56 @@
 require ('bulma');
+
+
 const hello = require('hellojs');
+const config = require('./config').GITHUB;
+console.log(config.CLIENT_ID)
+
+const $form = document.querySelector(".js-form-add-topic");
+
+
+$form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const $form = document.querySelector('.js-form-add-topic');
+    const data = new FormData($form);
+    const map = new Map(data.entries());
+    console.log(map);
+    
+    $form.reset();
+    renderTopics(map)
+
+});
+
+function renderTopics(map) {
+    
+    const template2 = `
+    <div class="column is-3">
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title">
+                        "Temat nr. 1"
+                    </p>
+                </header>
+                <div class="card-content">
+                    <div class="content">
+                        Opis tematu...
+                    </div>
+                </div>
+                <footer class="card-footer">
+                    <a href="#" class="card-footer-item">Zagłosuj</a>
+                    <a href="#" class="card-footer-item">Chcę być trenerem</a>
+                </footer>
+            </div>
+        </div>
+
+`
+    
+}
+
+
+('submit', (e) => {
+    
+});
+
 
 var userCheck = hello('github').getAuthResponse();
 
@@ -67,6 +118,7 @@ $logout.addEventListener('click', () => {
                 location.reload(true);
             })
     });
+
 
 
 
