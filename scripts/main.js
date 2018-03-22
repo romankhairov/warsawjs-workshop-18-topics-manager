@@ -1,11 +1,51 @@
-require ('bulma');
+require ('bulma'); // css framework
 
 
-const hello = require('hellojs');
-const config = require('./config').GITHUB;
-console.log(config.CLIENT_ID)
+const hello = require('hellojs'); // external package
+const config = require('./config');// make data more organized with external package
 
-const $form = document.querySelector(".js-form-add-topic");
+const $form = document.querySelector(".js-form-add-topic"); //$+name - is for quicker indicate of query obj
+const $login = document.querySelector(".js-login-via-github");
+const $logout = document.querySelector(".js-logout-via-github");
+const $user = document.querySelector(".user");
+
+
+
+hello.init({
+    github: config.GITHUB.CLIENT_ID
+});
+
+
+const getUserData = () => {
+    
+    hello('github').api('/me')
+        .then(function (userProfile) {
+             renderUserDetails(userProfile)
+         })
+    
+};
+
+const userAuthCheck = hello('github').getAuthResponse();
+
+// check for login only once
+if ( userAuthCheck !== null) {
+    
+    getUserData(); 
+    
+}
+
+
+
+$login.addEventListener('click', (e) => {
+    console.log("login");
+    e.preventDefault();
+    hello('github').login()
+        .then(function () { 
+            getUserData();
+        
+});
+   
+    
 
 
 $form.addEventListener('submit', (e) => {
@@ -52,35 +92,6 @@ function renderTopics(map) {
 });
 
 
-var userCheck = hello('github').getAuthResponse();
-
-if (userCheck) {
-  
-    hello('github').api('/me')
-        .then(function (userProfile) {
-        console.log(userProfile);
-        renderUserDetails(userProfile)
-    });
-    
-};
-
-hello.init({
-    github: 'c8917518020c7fc8f6a8'
-});
-
-//const $login = document.querySelector(".js-login-via-github");
-//$login.onclick = function () {
-//        console.log("Test");
-//    };
-//
-//document.querySelector(".js-login-via-github");
-// onclick = function () {
-//        console.log("Test 2");
-//    };
-
-const $login = document.querySelector(".js-login-via-github");
-const $logout = document.querySelector(".js-logout-via-github");
-const $user = document.querySelector(".user");
 
 
 
@@ -92,11 +103,11 @@ $login.addEventListener('click', (e) => {
             return hello('github').api('/me');
         })
             .then(function (userProfile) {
-                console.log(userProfile);
-                renderUserDetails(userProfile)
+                renderUserDetails(userProfile);
             })
 
 });
+
 
 function renderUserDetails(userProfile) {
     const template = `
@@ -109,16 +120,11 @@ function renderUserDetails(userProfile) {
 `
     $user.innerHTML += template;
     
-}
+};
+
 
 $logout.addEventListener('click', () => {
         console.log("logout");
         hello.logout('github')
-            .then(function () {
-                location.reload(true);
-            })
+            .then(() => location.reload(true))
     });
-
-
-
-
