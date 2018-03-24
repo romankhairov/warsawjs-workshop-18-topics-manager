@@ -8,25 +8,22 @@ const $form = document.querySelector(".js-form-add-topic"); //$+name - is for qu
 const $login = document.querySelector(".js-login-via-github");
 const $logout = document.querySelector(".js-logout-via-github");
 const $user = document.querySelector(".user");
-const $jstopics = document.querySelector(".jstopics");
+const $mapElement = new Set();
+const $jstopics = document.querySelector(".js-topics");
+const $jsaddform = document.querySelector(".js-add-form");
 
 
 // 12) prevent the lack of data
 const userAuthCheck = hello('github').getAuthResponse();
 
-if ( userAuthCheck !== null) {  
-    renderUser();  
-}
-
- 
-function renderUser(){
-    
+if (userAuthCheck) {  
     hello('github').api('/me')
         .then(function (userProfile) {
-             renderUserDetails(userProfile)
-         })
-    
-};
+             renderUserDetails(userProfile);
+             $jsaddform.classList.remove("is-hidden");// unhide form for logged user
+             $logout.classList.remove("is-hidden");// unhide logout button
+         }); 
+} 
 
 
 
@@ -115,8 +112,8 @@ function renderTopics(mapElement) {
             </div>
         </div>
 
-`
+`;
     // 18) add element
     $jstopics.innerHTML += template2;
     
-}
+};

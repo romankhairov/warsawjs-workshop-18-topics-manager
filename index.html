@@ -24,7 +24,7 @@
      </div>
      
      <div class="navbar-item">
-         <button class="button is-danger js-logout-via-github">Wyloguj</button>
+         <button class="button is-danger is-hidden js-logout-via-github">Wyloguj</button>
      </div>
      
      <div class="user"></div>
@@ -37,7 +37,7 @@
 </section>
 
 <!-- 13) template to add topic -->
-<section class="section">
+<section class="section js-add-form is-hidden">
     <div class="columns is-centered">
         <div class="column is-half">
             <article class="message">
@@ -82,11 +82,11 @@
  
 
 <!-- 12) making  list -->
- <section class="section">
+ <section class="section js-add-form is-hidden">
     <h1 class="title">Zgłoszone tematy</h1>
     <h2 class="subtitle">Zagłosuj na temat, aby został wkrótce zrealizowany</h2>
-<!-- 17) add here class "jstopics" for insert from renderTopics() -->
-    <div class="columns is-multiline jstopics">
+<!-- 17) add here class "js-topics" for insert from renderTopics() -->
+    <div class="columns is-multiline js-topics">
     
 <!-- 19) Place for new element -->
 
